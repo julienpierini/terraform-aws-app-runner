@@ -1,5 +1,5 @@
 resource "aws_security_group" "this" {
-  for_each    = { for key, value in var.app_runner : key => value if value.security_groups_ids != [] }
+  for_each    = { for key, value in var.app_runner : key => value if value.vpc_id != null }
   name        = "${each.key}-sg"
   description = "default security group for ${each.key}"
   vpc_id      = each.value.vpc_id
@@ -78,7 +78,7 @@ resource "aws_apprunner_service" "this" {
 
   source_configuration {
     authentication_configuration {
-      access_role_arn = "arn:aws:iam::301381660126:role/service-role/AppRunnerECRAccessRole"
+      access_role_arn = var.service_linked_role_arn
     }
     image_repository {
       dynamic "image_configuration" {

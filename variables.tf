@@ -33,7 +33,7 @@ variable "app_runner" {
     kms_key_arn           = optional(string)
     private_zone          = optional(bool)
     security_groups_ids   = optional(list(string))
-    subnets               = list(string)
+    subnets               = optional(list(string))
     tags                  = map(string)
     vpc_id                = optional(string)
     zone_name             = optional(string)
@@ -42,4 +42,10 @@ variable "app_runner" {
 variable "name_suffix" {
   description = "name suffix to happend at the end of module resources"
   type        = string
+}
+
+variable "service_linked_role_arn" {
+  description = "arn of the service linked role build.apprunner.amazonaws.com"
+  type        = string
+  default     = null
 }

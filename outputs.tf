@@ -16,9 +16,9 @@ output "app_runner_service_cnames" {
 }
 output "app_runner_service_sg_arns" {
   description = "app runner service sg arns"
-  value       = { for key, value in var.app_runner : key => aws_security_group.this[key].arn if value.security_groups_ids != [] }
+  value       = { for key, value in var.app_runner : key => aws_security_group.this[key].arn if value.vpc_id != null }
 }
 output "app_runner_service_sg_ids" {
   description = "app runner service sg ids"
-  value       = { for key, value in var.app_runner : key => aws_security_group.this[key].id if value.security_groups_ids != [] }
+  value       = { for key, value in var.app_runner : key => aws_security_group.this[key].id if value.vpc_id != null }
 }
